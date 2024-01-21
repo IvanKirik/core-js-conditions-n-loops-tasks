@@ -296,8 +296,52 @@ function getBalanceIndex(arr) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  const matrix = new Array(size);
+  for (let i = 0; i < size; i += 1) {
+    matrix[i] = new Array(size);
+  }
+
+  let number = 1;
+  let row = 0;
+  let col = 0;
+  let direction = 'right';
+
+  for (let i = 0; i < size * size; i += 1) {
+    matrix[row][col] = number;
+    number += 1;
+    if (direction === 'right') {
+      if (col + 1 < size && matrix[row][col + 1] === undefined) {
+        col += 1;
+      } else {
+        row += 1;
+        direction = 'down';
+      }
+    } else if (direction === 'down') {
+      if (row + 1 < size && matrix[row + 1][col] === undefined) {
+        row += 1;
+      } else {
+        col -= 1;
+        direction = 'left';
+      }
+    } else if (direction === 'left') {
+      if (col - 1 >= 0 && matrix[row][col - 1] === undefined) {
+        col -= 1;
+      } else {
+        row -= 1;
+        direction = 'up';
+      }
+    } else if (direction === 'up') {
+      if (row - 1 >= 0 && matrix[row - 1][col] === undefined) {
+        row -= 1;
+      } else {
+        col += 1;
+        direction = 'right';
+      }
+    }
+  }
+
+  return matrix;
 }
 
 /**
@@ -315,8 +359,25 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  const rowLength = matrix.length;
+  const colLength = matrix[0].length;
+  const mar = matrix;
+  for (let i = 0; i < rowLength; i += 1) {
+    for (let j = 0; j < i; j += 1) {
+      [mar[i][j], mar[j][i]] = [mar[j][i], mar[i][j]];
+    }
+  }
+  for (let i = 0; i < rowLength; i += 1) {
+    for (let j = 0; j < Math.floor(colLength / 2); j += 1) {
+      [mar[i][j], mar[i][colLength - 1 - j]] = [
+        mar[i][colLength - 1 - j],
+        mar[i][j],
+      ];
+    }
+  }
+
+  return matrix;
 }
 
 /**
